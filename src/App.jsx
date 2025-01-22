@@ -1,36 +1,26 @@
-import { useEffect, useState } from "react";
-import ListProductsComponent from "./components/ListProductsComponent";
-import SingleProductComponent from "./components/SingleProductComponent";
-
+import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ProductService from "./components/services/produstService";
+import axios from "axios";
+
+axios.defaults.baseURL = "https://dummyjson.com";
 
 function App() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [allProdusts, setAllProducts] = useState([]);
   useEffect(() => {
-    fetch("https://dummyjson.com/products")
-      .then((res) => res.json())
-      .then((data) => {
-        setAllProducts(data.products);
-        setIsLoading(true);
-      });
+    ProductService.getSingleProduct()
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
   }, []);
 
   return (
-    <>
-      {/* <div className="flex flex-wrap items-center justify-center gap-[20px]">
-        {isLoading ? (
-          allProdusts.map((product) => {
-            return <ListProductsComponent key={product.id} product={product} />;
-          })
-        ) : (
-          <h2>LOADING</h2>
-        )}
-      </div> */}
-      <SingleProductComponent />;
+    <div className="container mx-auto flex flex-col items-center justify-center my-[60px]">
+      <h1 className="text-[60px] text-green-600 font-extrabold mb-[40px]">
+        LODO APP
+      </h1>
+
       <ToastContainer />
-    </>
+    </div>
   );
 }
 
